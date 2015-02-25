@@ -34,24 +34,29 @@ def numpy_fib_route(num):
 @flask_app.route('/show_results')
 def show_results():
     for item in results:
-        item['result'] = retrieve_task(item['obj'])
+        retrieve_task(item)
     return render_template("show_results.html", results=results, tasks=celery_app.tasks)
 
 
 def add_to_results(num, obj):
     global results
-    results.append({
-        "num": num,
-        "obj": obj,
-        "result": retrieve_task(obj)
-    })
+    item = {"num": num, "obj": obj}
+    retrieve_task(item)
+    results.append(item)
 
 
-def retrieve_task(task):
-    if task.ready():
-        return task.get(timeout=1)
+def retrieve_task(item):
+    if item['obj'].ready():
+        result = item['obj'].get(timeout=1)
+        print "result", result
+        item['result'] = result
     else:
-        return "not ready"
+        item['result'] = "not ready"
+    print item
+
+
+def get_task_by_id(task_id):
+    result = MyTask.AsyncResult(task_id)
 
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+      <meta http-equiv="refresh" content="10"/> 
     </head>
     <body>
         <div class="row">
@@ -17,16 +18,18 @@
                     <thead>
                         <tr>
                             <th> Number </th>
+                            <th> State </th>
+                            <th> ID </th>
                             <th> Result </th>
-                            <th> Result ID </th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in results %}
                         <tr>
                             <td>{{ item['num'] }}</td>
-                            <td>{{ item['result'] }}</td>
+                            <td>{{ item['obj'].state }}</td>
                             <td>{{ item['obj'].id }}</td>
+                            <td class="truncate">{{ item['result'] }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -36,8 +39,14 @@
         <div class="row" ng-app>
             <div class="col s12">
                 {% raw %}
-                <div class="col offset-s2 ">
-                 <input type="number" ng-model="fib.crappy" ng-pattern="/[0-9]+/"/> <a class="waves-effect waves-light btn" disable="fib.crappy.$invalid" href="/crappy_fib/{{fib.crappy}}">crap {{ fib.crappy }}</a>
+                <div class="col offset-s2 s3">
+                    <label for="fibNumber">Add task</label>
+                    <input id="fibNumber" type="number" ng-model="fib.number" ng-pattern="/[0-9]+/"/>
+                    <br>
+                    <a class="waves-effect waves-light btn" disabled="fib.number.$invalid" href="/crappy_fib/{{ fib.number }}">slow</a>
+                    <a class="waves-effect waves-light btn" disabled="fib.number.$invalid" href="/numpy_fib/{{ fib.number }}">fast</a>
+                 </div>
+                <div class="col s3">
                  </div>
                  {% endraw %}
             </div>
