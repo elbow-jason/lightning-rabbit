@@ -2,7 +2,7 @@
 import numpy
 from celery import Celery
 
-celery_app = Celery('fibs', broker='amqp://guest@localhost//')
+celery_app = Celery('fibs', backend='amqp', broker='amqp://guest@localhost//')
 
 
 @celery_app.task
