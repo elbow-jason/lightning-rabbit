@@ -31,6 +31,13 @@ def numpy_fib_route(num):
     return redirect(url_for('show_results'))
 
 
+@flask_app.route('/reset')
+def reset():
+    global results 
+    results = []
+    return redirect(url_for('show_results'))
+
+
 @flask_app.route('/')
 def show_results():
     for item in results:
