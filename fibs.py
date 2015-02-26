@@ -11,6 +11,7 @@ celery_app = Celery('fibs', backend='amqp', broker='amqp://guest@localhost//')
 def crappy_fib(num):
     return str(do_crappy_fib(num))
 
+
 def do_crappy_fib(num):
     if num < 2:
         return num
